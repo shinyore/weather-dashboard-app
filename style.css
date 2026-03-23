@@ -1,0 +1,44 @@
+body {
+  font-family: Arial;
+  background: #f0f8ff;
+  margin: 0;
+}
+
+.container {
+  text-align: center;
+  margin-top: 50px;
+  padding: 20px;
+}
+
+input {
+  padding: 10px;
+  width: 200px;
+  max-width: 80%;
+}
+
+button {
+  padding: 10px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+#result {
+  margin-top: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* 📱 Mobile Responsive */
+@media (max-width: 600px) {
+  input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  button {
+    width: 100%;
+    margin-left: 0;
+  }
+}
