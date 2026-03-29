@@ -1,44 +1,39 @@
 body {
   font-family: Arial;
-  background: #f0f8ff;
   margin: 0;
+  background: #e6f2ff;
 }
 
 .container {
   text-align: center;
-  margin-top: 50px;
   padding: 20px;
+  margin-top: 50px;
 }
 
 input {
   padding: 10px;
-  width: 200px;
+  width: 250px;
   max-width: 80%;
 }
 
 button {
   padding: 10px;
   cursor: pointer;
-  margin-left: 10px;
 }
 
 #result {
   margin-top: 20px;
+  font-size: 18px;
 }
 
 .hidden {
   display: none;
 }
 
-/* 📱 Mobile Responsive */
-@media (max-width: 600px) {
-  input {
-    width: 100%;
-    margin-bottom: 10px;
-  }
 
-  button {
+@media (max-width: 600px) {
+  input, button {
     width: 100%;
-    margin-left: 0;
+    margin-top: 10px;
   }
 }
