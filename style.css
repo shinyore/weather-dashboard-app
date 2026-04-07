@@ -1,39 +1,86 @@
+
 body {
-  font-family: Arial;
   margin: 0;
-  background: #e6f2ff;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f4f6f9;
 }
 
+
 .container {
+  max-width: 500px;
+  margin: 50px auto;
   text-align: center;
-  padding: 20px;
-  margin-top: 50px;
+}
+
+
+h1 {
+  margin-bottom: 20px;
+}
+
+
+.search-box {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
 }
 
 input {
   padding: 10px;
-  width: 250px;
-  max-width: 80%;
+  width: 70%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 }
 
 button {
-  padding: 10px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  background: #007bff;
+  color: white;
   cursor: pointer;
 }
 
-#result {
+button:hover {
+  background: #0056b3;
+}
+
+.controls {
+  margin: 15px 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+
+.card {
   margin-top: 20px;
-  font-size: 18px;
+  padding: 20px;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.hidden {
-  display: none;
+
+.favorites p {
+  background: white;
+  padding: 8px;
+  margin: 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 
-@media (max-width: 600px) {
-  input, button {
-    width: 100%;
-    margin-top: 10px;
-  }
+.dark {
+  background: #121212;
+  color: white;
+}
+
+.dark .card,
+.dark .favorites p {
+  background: #1e1e1e;
+}
+
+.dark button {
+  background: #333;
 }

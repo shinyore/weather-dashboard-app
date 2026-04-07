@@ -1,49 +1,116 @@
 const API_KEY = "a234b81284aafc22e3e03a417e02d21f";
 
+let unit = "metric";
+
+
+let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+
+document.getElementById("city").addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    getWeather();
+  }
+});
+
+
 async function getWeather() {
   const city = document.getElementById("city").value.trim();
-  const result = document.getElementById("result");
-  const loading = document.getElementById("loading");
 
   if (city === "") {
-    alert("Please enter a city name");
+    alert("Enter city name");
     return;
   }
 
-
-  loading.classList.remove("hidden");
-  result.innerHTML = "";
+  const result = document.getElementById("result");
+  result.innerHTML = "⏳ Loading...";
 
   try {
-
     const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=${unit}`
     );
 
     const data = await response.json();
 
-    console.log(data); 
-
-
-    if (data.cod == 404) {
-      result.innerHTML = `<p>❌ City not found</p>`;
-    } else if (data.cod == 401) {
-      result.innerHTML = `<p>❌ Invalid API Key</p>`;
-    } else {
-
-      result.innerHTML = `
-        <h2>${data.name}</h2>
-        <p>🌡️ Temperature: ${data.main.temp} °C</p>
-        <p>☁️ Weather: ${data.weather[0].main}</p>
-        <p>💧 Humidity: ${data.main.humidity}%</p>
-        <p>🌬️ Wind Speed: ${data.wind.speed} m/s</p>
-      `;
+    // handle errors
+    if (data.cod == "404") {
+      result.innerHTML = "❌ City not found";
+      return;
     }
 
+    if (data.cod == "401") {
+      result.innerHTML = "❌ Invalid API key";
+      return;
+    }
+
+    displayWeather(data);
+
   } catch (error) {
-    result.innerHTML = `<p>⚠️ Error fetching data</p>`;
+    result.innerHTML = "❌ Error fetching data";
   }
-
-
-  loading.classList.add("hidden");
 }
+
+// DISPLAY WEATHER
+function displayWeather(data) {
+  const result = document.getElementById("result");
+
+  result.innerHTML = `
+    <h2>${data.name}</h2>
+    <button onclick="addFavorite('${data.name}')">⭐ Add to Favorite</button>
+
+    <p>🌡️ Temp: ${data.main.temp} ${unit === "metric" ? "°C" : "°F"}</p>
+    <p>🤔 Feels Like: ${data.main.feels_like} ${unit === "metric" ? "°C" : "°F"}</p>
+    <p>☁️ Weather: ${data.weather[0].main}</p>
+    <p>💧 Humidity: ${data.main.humidity}%</p>
+    <p>🌬️ Wind: ${data.wind.speed} m/s</p>
+  `;
+}
+
+
+function addFavorite(city) {
+  if (!favorites.includes(city)) {
+    favorites.push(city);
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    displayFavorites();
+  } else {
+    alert("Already added");
+  }
+}
+
+function displayFavorites() {
+  const favDiv = document.getElementById("favorites");
+
+  favDiv.innerHTML = favorites
+    .map(
+      (city, index) => `
+      <p>
+        ⭐ <span onclick="searchFromFavorite('${city}')">${city}</span>
+        ❌ <button onclick="removeFavorite(${index})">X</button>
+      </p>
+    `
+    )
+    .join("");
+}
+
+function removeFavorite(index) {
+  favorites.splice(index, 1);
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+  displayFavorites();
+}
+
+function searchFromFavorite(city) {
+  document.getElementById("city").value = city;
+  getWeather();
+}
+
+
+function toggleTheme() {
+  document.body.classList.toggle("dark");
+}
+
+
+function toggleUnit() {
+  unit = unit === "metric" ? "imperial" : "metric";
+}
+
+
+displayFavorites();
