@@ -49,7 +49,7 @@ async function getWeather() {
   }
 }
 
-// DISPLAY WEATHER
+
 function displayWeather(data) {
   const result = document.getElementById("result");
 
