@@ -7,6 +7,9 @@ let lastCity = "";
 let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
 
+let history = JSON.parse(localStorage.getItem("history")) || [];
+
+
 document.getElementById("city").addEventListener("keypress", function (e) {
   if (e.key === "Enter") {
     getWeather();
@@ -22,8 +25,10 @@ async function getWeather() {
     return;
   }
 
-
   lastCity = city;
+
+
+  saveSearch(city);
 
   const result = document.getElementById("result");
   result.innerHTML = "⏳ Loading...";
@@ -106,6 +111,39 @@ function searchFromFavorite(city) {
 }
 
 
+
+function saveSearch(city) {
+  if (!history.includes(city)) {
+    history.unshift(city);
+
+
+    history = history.slice(0, 5);
+
+    localStorage.setItem("history", JSON.stringify(history));
+    displayHistory();
+  }
+}
+
+function displayHistory() {
+  const historyDiv = document.getElementById("history");
+
+  historyDiv.innerHTML = history
+    .map(
+      (city) => `
+      <p onclick="searchFromHistory('${city}')">
+        🔍 ${city}
+      </p>
+    `
+    )
+    .join("");
+}
+
+function searchFromHistory(city) {
+  document.getElementById("city").value = city;
+  getWeather();
+}
+
+
 function toggleTheme() {
   document.body.classList.toggle("dark");
 }
@@ -121,3 +159,4 @@ function toggleUnit() {
 
 
 displayFavorites();
+displayHistory();
