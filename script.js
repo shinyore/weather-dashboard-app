@@ -1,6 +1,7 @@
 const API_KEY = "a234b81284aafc22e3e03a417e02d21f";
 
 let unit = "metric";
+let lastCity = "";
 
 
 let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
@@ -21,6 +22,9 @@ async function getWeather() {
     return;
   }
 
+
+  lastCity = city;
+
   const result = document.getElementById("result");
   result.innerHTML = "⏳ Loading...";
 
@@ -31,7 +35,6 @@ async function getWeather() {
 
     const data = await response.json();
 
-    // handle errors
     if (data.cod == "404") {
       result.innerHTML = "❌ City not found";
       return;
@@ -107,9 +110,13 @@ function toggleTheme() {
   document.body.classList.toggle("dark");
 }
 
-
 function toggleUnit() {
   unit = unit === "metric" ? "imperial" : "metric";
+
+  if (lastCity !== "") {
+    document.getElementById("city").value = lastCity;
+    getWeather();
+  }
 }
 
 
