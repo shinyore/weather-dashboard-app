@@ -45,6 +45,25 @@ To practice API integration and JavaScript.
 
 ---
 
+
+
+## 🌐 Live Demo
+https://shinyore.github.io/weather-dashboard-app/
+
+## ✨ Features
+- Search weather by city
+- Real-time API data
+- Celsius / Fahrenheit toggle
+- Dark / Light mode
+- Favorites system
+- Search history
+
+## 🛠 Tech Stack
+- HTML
+- CSS
+- JavaScript
+- OpenWeatherMap API
+
 ## 👨‍💻 Author
 
 Shine
